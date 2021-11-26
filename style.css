@@ -1,0 +1,29 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+td {
+  border: 1px solid black;
+  padding: 5px;
+}
+th {
+  border: 1px solid black;
+  padding: 5px;
+  text-align: left;
+}
+
+.search-div .recipe-body {
+  width: 90vw;
+  margin: 0 auto;
+  max-width: 35rem;
+  margin-top: 8rem;
+}
+@media screen and (min-width: 992px) {
+  .search-div .recipe-body {
+    width: 95vw;
+  }
+}
