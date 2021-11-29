@@ -1,0 +1,55 @@
+<div class="container search-div" ng-controller="myController">
+  <form>
+    <h1 class="mt-50">Search Recipe</h1>
+    <input type="text" placeholder="search" name="search" ng-model="query" />
+
+    <button class="btn btn-danger" ng-click="searchRecipe(query)">
+      Search
+    </button>
+  </form>
+  <!-- recipe body -->
+  <br /><br />
+  <div class="recipe-list" ng-repeat="recipe in recipes">
+    <div class="card mb-3" style="max-width: 540px">
+      <div class="row g-0">
+        <div class="col-md-4">
+          <img
+            src="{{recipe.recipe.images.SMALL}}"
+            class="img-fluid rounded-start"
+            alt="..."
+          />
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title">
+              <a href="#/recipeDetail/{{recipe.recipe.label}}"
+                >{{recipe.recipe.label}}</a
+              >
+            </h5>
+            <p class="card-text">
+              <strong>Meal Type:</strong> {{recipe.recipe.mealType[0]}}
+            </p>
+            <p class="card-text">
+              <strong>Cuisine:</strong>{{recipe.recipe.cuisineType[0]}}
+            </p>
+            <p class="card-text">
+              <strong>Dish:</strong>{{recipe.recipe.dishType[0]}}
+            </p>
+            <p class="card-text">
+              <strong>Calories:</strong>{{recipe.recipe.calories}}
+            </p>
+            <p class="card-text">
+              <strong>Source:</strong>{{recipe.recipe.source}}
+            </p>
+            <p class="card-text">
+              <small class="text-muted">Last updated 3 mins ago</small>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- recipe list end -->
+  </div>
+  <button class="btn btn-danger" ng-click="alert('nextpage')">next page</button>
+  <!-- myController end -->
+</div>
