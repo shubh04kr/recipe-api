@@ -1,0 +1,48 @@
+<h1>Add Recipe</h1>
+<form ng-submit="addRecipe()">
+  <div class="mb-3">
+    <label for="recipeTitle" class="form-label" ng-model="recipe.title"
+      >Recipe Title</label
+    >
+    <input
+      type="text"
+      class="form-control"
+      id="recipeTitle"
+      ng-model="recipe.title"
+    />
+  </div>
+  <div class="mb-3">
+    <label for="cuisine" class="form-label" ng-model="recipe.cuisine"
+      >Cuisine</label
+    >
+    <input
+      type="text"
+      class="form-control"
+      id="cuisine"
+      ng-model="recipe.cuisine"
+    />
+  </div>
+  <div class="mb-3">
+    <label for="cuisine" class="form-label" ng-model="recipe.dish"
+      >Dish Type</label
+    >
+    <input
+      type="text"
+      class="form-control"
+      id="cuisine"
+      ng-model="recipe.dishType"
+    />
+  </div>
+  <div class="mb-3">
+    <label for="cuisine" class="form-label" ng-model="recipe.calorie"
+      >Calorie</label
+    >
+    <input
+      type="text"
+      class="form-control"
+      id="cuisine"
+      ng-model="recipe.calorie"
+    />
+  </div>
+  <button type="submit" class="btn btn-primary">Add Recipe</button>
+</form>

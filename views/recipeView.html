@@ -1,0 +1,111 @@
+<h1>Your recipes here</h1>
+
+<!-- recipe body -->
+
+<div class="recipe-list" ng-repeat="recipe in recipes">
+  <div class="card mb-3" style="max-width: 540px">
+    <div class="row g-0">
+      <div class="col-md-4">
+        <img
+          ng-src="https://images.unsplash.com/photo-1542010589005-d1eacc3918f2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8cmVjaXBlfGVufDB8fDB8fA%3D%3D&w=1000&q=80"
+          class="img-fluid rounded-start"
+          style="height: 200px; width: 200px"
+          alt="..."
+        />
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title">
+            <a
+              href="#!/detail/{{recipe._links.self.href.split('/')[6].split('?')[0]}}"
+              >{{recipe.title}}</a
+            >
+          </h5>
+          <p class="card-text"><strong>Cuisine:</strong>{{recipe.cuisine}}</p>
+          <p class="card-text"><strong>Dish:</strong>{{recipe.dishType}}</p>
+          <p class="card-text">
+            <strong>Calories:</strong>{{recipe.calorie}} Kcal
+          </p>
+
+          <button class="btn btn-primary btn-sm" ng-click="editFlag=true">
+            Edit
+          </button>
+          <button
+            class="btn btn-primary btn-sm"
+            ng-click="deleteRecipe(recipe)"
+          >
+            Delete
+          </button>
+          <br />
+          <br />
+          <div ng-show="editFlag">
+            <h1>Edit Recipe</h1>
+            <form>
+              <div class="mb-3">
+                <label
+                  for="recipeTitle"
+                  class="form-label"
+                  ng-model="recipe.title"
+                  >Recipe Title</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="recipeTitle"
+                  ng-model="recipe.title"
+                />
+              </div>
+              <div class="mb-3">
+                <label
+                  for="cuisine"
+                  class="form-label"
+                  ng-model="recipe.cuisine"
+                  >Cuisine</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="cuisine"
+                  ng-model="recipe.cuisine"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="cuisine" class="form-label" ng-model="recipe.dish"
+                  >Dish Type</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="cuisine"
+                  ng-model="recipe.dishType"
+                />
+              </div>
+              <div class="mb-3">
+                <label
+                  for="cuisine"
+                  class="form-label"
+                  ng-model="recipe.calorie"
+                  >Calorie</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="cuisine"
+                  ng-model="recipe.calorie"
+                />
+              </div>
+              <button
+                ng-click="editRecipe(recipe)"
+                type="submit"
+                class="btn btn-primary"
+              >
+                Edit Recipe
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- recipe list end -->
+</div>

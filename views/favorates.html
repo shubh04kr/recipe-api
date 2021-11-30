@@ -1,12 +1,3 @@
-<!-- <div class="container search-div" ng-controller="myController"> -->
-<form>
-  <h1 class="mt-50">Search Recipe</h1>
-  <input type="text" placeholder="search" name="search" ng-model="query" />
-
-  <button class="btn btn-danger" ng-click="searchRecipe(query)">Search</button>
-</form>
-<!-- recipe body -->
-<br /><br />
 <div class="recipe-list" ng-repeat="recipe in recipes">
   <div class="card mb-3" style="max-width: 540px">
     <div class="row g-0">
@@ -36,28 +27,22 @@
             <strong>Dish:</strong>{{recipe.recipe.dishType[0]}}
           </p>
           <p class="card-text">
-            <strong>Calories:</strong>{{recipe.recipe.calories}} Kcal
+            <strong>Calories:</strong>{{recipe.recipe.calories}}
           </p>
           <p class="card-text">
             <strong>Source:</strong>{{recipe.recipe.source}}
           </p>
+          <p class="card-text">
+            <small class="text-muted">Last updated 3 mins ago</small>
+          </p>
           <button
             class="btn btn-primary btn-sm"
-            ng-click="addToFavorate(recipe)"
+            ng-click="removeFromFavorate(recipe.id)"
           >
-            Add to favorate
+            remove
           </button>
         </div>
       </div>
     </div>
   </div>
-  <!-- recipe list end -->
 </div>
-
-<button
-  ng-show="nextPageFlag"
-  class="btn btn-danger"
-  ng-click="nextPage(nextPageUrl)"
->
-  next page
-</button>
