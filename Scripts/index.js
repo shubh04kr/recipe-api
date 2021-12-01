@@ -2,9 +2,12 @@ const app = angular.module("myApp", ["ngRoute"]);
 app
   .config(["$routeProvider", "$locationProvider", RouteConfig])
   .controller("searchController", searchController)
-  .controller("detailController", detailController);
+  .controller("detailController", detailController)
+  .controller("favorateController", favorateController)
+  .controller("addRecipeController", addRecipeController)
+  .controller("recipeViewController", recipeViewController);
 
-function RouteConfig($routeProvider, $locationProvider) {
+function RouteConfig($routeProvider) {
   $routeProvider
     .when("/", {
       templateUrl: "./views/home.html",
@@ -35,6 +38,18 @@ function RouteConfig($routeProvider, $locationProvider) {
   // $locationProvider.html5Mode(true);
 }
 
+app.directive("directiveWhenScrolled", function () {
+  return function (scope, elm, attr) {
+    var raw = elm[0];
+
+    elm.bind("scroll", function () {
+      if (raw.scrollTop + raw.offsetHeight >= raw.scrollHeight) {
+        scope.$apply(attr.directiveWhenScrolled);
+      }
+    });
+  };
+});
+
 function favorateController($scope, $http) {
   const url = "http://localhost:3000/favorates";
   $http.get(url).then((response) => {
@@ -55,16 +70,16 @@ function favorateController($scope, $http) {
 
 function addRecipeController($scope, $http) {
   $scope.addRecipe = () => {
-    recipeArray.push({
-      title: $scope.recipe.title,
-      cuisine: $scope.recipe.cuisine,
-    });
     $http({
       url: "http://localhost:3000/recipes",
       method: "POST",
       data: $scope.recipe,
     }).then((response) => {
-      console.log("Added new Recipe");
+      Swal.fire("New Recipe Added!!", "success");
+      $scope.recipe.title = "";
+      $scope.recipe.cuisine = "";
+      $scope.recipe.dishType = "";
+      $scope.recipe.calorie = "";
     });
   };
 }
@@ -74,6 +89,15 @@ function searchController($scope, $http) {
   const API_ID = "d6116be590dc355c9fdd3824299c54fd";
   $scope.query = "";
   $scope.nextPageFlag = false;
+  $scope.gridFlag = false;
+
+  let counter = 0;
+  $scope.loadMore = function () {
+    $scope.limit += 5;
+    console.log("load more");
+  };
+
+  $scope.loadMore();
 
   $scope.searchRecipe = function (query) {
     const url = `https://api.edamam.com/api/recipes/v2?app_id=${APP_ID}&app_key=${API_ID}&q=${query}&type=public`;
@@ -83,6 +107,8 @@ function searchController($scope, $http) {
         $scope.recipes = response.data.hits;
         $scope.nextPageUrl = response.data._links.next.href;
         $scope.nextPageFlag = true;
+        $scope.prevPageUrl = url;
+        console.log("prevpageurl", $scope.prevPageUrl);
       })
       .catch((error) => {
         console.log(error);
@@ -96,6 +122,7 @@ function searchController($scope, $http) {
       data: recipe,
     }).then((response) => {
       console.log("Added to favorate");
+      Swal.fire("Added to Favorate", "success");
     });
   };
   $scope.nextPage = (url) => {
@@ -103,6 +130,17 @@ function searchController($scope, $http) {
       $scope.recipes = response.data.hits;
       $scope.nextPageUrl = response.data._links.next.href;
       $scope.nextPageFlag = true;
+      $scope.prevPageUrl = url;
+    });
+  };
+  $scope.prevPage = (url) => {
+    console.log("url", url);
+    $http.get(url).then((response) => {
+      console.log("in http", response.data.hits[19]);
+      $scope.recipes = response.data.hits;
+      $scope.nextPageUrl = response.data._links.next.href;
+      $scope.nextPageFlag = true;
+      $scope.prevPageUrl = url;
     });
   };
 }
@@ -139,6 +177,7 @@ function recipeViewController($scope, $http) {
       method: "DELETE",
     }).then((response) => {
       console.log("DELETED");
+      Swal.fire("DELETED");
       const url = "http://localhost:3000/recipes";
 
       $http.get(url).then((response) => {
@@ -153,7 +192,7 @@ function recipeViewController($scope, $http) {
       method: "PATCH",
       data: recipe,
     }).then((response) => {
-      console.log("edited");
+      Swal.fire("EDITED");
       const url = "http://localhost:3000/recipes";
       $http.get(url).then((response) => {
         $scope.recipes = response.data;
@@ -161,3 +200,5 @@ function recipeViewController($scope, $http) {
     });
   };
 }
+
+//json-server --watch db.json

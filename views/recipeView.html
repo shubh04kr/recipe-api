@@ -5,7 +5,7 @@
 <div class="recipe-list" ng-repeat="recipe in recipes">
   <div class="card mb-3" style="max-width: 540px">
     <div class="row g-0">
-      <div class="col-md-4">
+      <div class="col-md-4" ng-hide="editFlag">
         <img
           ng-src="https://images.unsplash.com/photo-1542010589005-d1eacc3918f2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8cmVjaXBlfGVufDB8fDB8fA%3D%3D&w=1000&q=80"
           class="img-fluid rounded-start"
@@ -15,27 +15,29 @@
       </div>
       <div class="col-md-8">
         <div class="card-body">
-          <h5 class="card-title">
-            <a
-              href="#!/detail/{{recipe._links.self.href.split('/')[6].split('?')[0]}}"
-              >{{recipe.title}}</a
+          <div ng-hide="editFlag">
+            <h5 class="card-title">
+              <a
+                href="#!/detail/{{recipe._links.self.href.split('/')[6].split('?')[0]}}"
+                >{{recipe.title}}</a
+              >
+            </h5>
+            <p class="card-text"><strong>Cuisine:</strong>{{recipe.cuisine}}</p>
+            <p class="card-text"><strong>Dish:</strong>{{recipe.dishType}}</p>
+            <p class="card-text">
+              <strong>Calories:</strong>{{recipe.calorie}} Kcal
+            </p>
+            <button class="btn btn-primary btn-sm" ng-click="editFlag=true">
+              Edit
+            </button>
+            <button
+              class="btn btn-primary btn-sm"
+              ng-click="deleteRecipe(recipe)"
             >
-          </h5>
-          <p class="card-text"><strong>Cuisine:</strong>{{recipe.cuisine}}</p>
-          <p class="card-text"><strong>Dish:</strong>{{recipe.dishType}}</p>
-          <p class="card-text">
-            <strong>Calories:</strong>{{recipe.calorie}} Kcal
-          </p>
+              Delete
+            </button>
+          </div>
 
-          <button class="btn btn-primary btn-sm" ng-click="editFlag=true">
-            Edit
-          </button>
-          <button
-            class="btn btn-primary btn-sm"
-            ng-click="deleteRecipe(recipe)"
-          >
-            Delete
-          </button>
           <br />
           <br />
           <div ng-show="editFlag">

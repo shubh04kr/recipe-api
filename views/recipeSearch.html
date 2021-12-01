@@ -1,63 +1,141 @@
-<!-- <div class="container search-div" ng-controller="myController"> -->
-<form>
-  <h1 class="mt-50">Search Recipe</h1>
-  <input type="text" placeholder="search" name="search" ng-model="query" />
+<!-- <link rel="stylesheet" href="recipeSearch.css" /> -->
+<div>
+  <form>
+    <h1 class="mt-50">Search Recipe</h1>
+    <input
+      type="text"
+      placeholder="search"
+      name="search"
+      ng-model="query"
+      autocomplete="off"
+    />
 
-  <button class="btn btn-danger" ng-click="searchRecipe(query)">Search</button>
-</form>
+    <button class="btn btn-danger" ng-click="searchRecipe(query)">
+      Search
+    </button>
+  </form>
+  <button
+    ng-show="!gridFlag"
+    class="btn btn-danger"
+    ng-click="gridFlag=!gridFlag"
+  >
+    Grid view
+  </button>
+  <button
+    ng-show="gridFlag"
+    class="btn btn-danger"
+    ng-click="gridFlag=!gridFlag"
+  >
+    Card view
+  </button>
+</div>
 <!-- recipe body -->
-<br /><br />
-<div class="recipe-list" ng-repeat="recipe in recipes">
-  <div class="card mb-3" style="max-width: 540px">
-    <div class="row g-0">
-      <div class="col-md-4">
-        <img
-          ng-src="{{recipe.recipe.image}}"
-          class="img-fluid rounded-start"
-          style="height: 200px; width: 200px"
-          alt="..."
-        />
+<div class="content">
+  <!-- card view -->
+  <div
+    class="recipe-list"
+    ng-repeat="recipe in recipes"
+    ng-hide="gridFlag"
+    directive-when-scrolled="loadMore()"
+  >
+    <div class="card mb-3" style="max-width: 540px">
+      <div class="row g-0">
+        <div class="col-md-4">
+          <img
+            ng-src="{{recipe.recipe.image}}"
+            class="img-fluid rounded-start"
+            style="height: 200px; width: 200px"
+            alt="..."
+          />
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title">
+              <a
+                href="#!/detail/{{recipe._links.self.href.split('/')[6].split('?')[0]}}"
+                >{{recipe.recipe.label}}</a
+              >
+            </h5>
+            <p class="card-text">
+              <strong>Meal Type : {{recipe.recipe.mealType[0]}}</strong>
+            </p>
+            <p class="card-text">
+              <strong>Cuisine : {{recipe.recipe.cuisineType[0]}}</strong>
+            </p>
+            <p class="card-text">
+              <strong>Dish : {{recipe.recipe.dishType[0]}}</strong>
+            </p>
+            <p class="card-text">
+              <strong
+                >Calories : {{recipe.recipe.calories | number:2}} Kcal</strong
+              >
+            </p>
+            <p class="card-text">
+              <strong>Source : {{recipe.recipe.source}}</strong>
+            </p>
+            <button
+              class="btn btn-primary btn-sm"
+              ng-click="addToFavorate(recipe)"
+            >
+              Add to favorate
+            </button>
+          </div>
+        </div>
       </div>
-      <div class="col-md-8">
-        <div class="card-body">
-          <h5 class="card-title">
+    </div>
+    <!-- recipe list end -->
+  </div>
+  <!-- grid view -->
+  <div>
+    <div class="recipe-list" ng-repeat="recipe in recipes" ng-show="gridFlag">
+      <table class="table">
+        <thead>
+          <tr>
+            <td>Image</td>
+            <td>Title</td>
+            <td>MealType</td>
+            <td>cuisineType</td>
+            <td>DishType</td>
+            <td>Calorie</td>
+          </tr>
+        </thead>
+        <tbody>
+          <td>
+            <img
+              ng-src="{{recipe.recipe.image}}"
+              class="img-fluid rounded-start"
+              style="height: 200px; width: 200px"
+              alt="..."
+            />
+          </td>
+          <td>
             <a
               href="#!/detail/{{recipe._links.self.href.split('/')[6].split('?')[0]}}"
               >{{recipe.recipe.label}}</a
             >
-          </h5>
-          <p class="card-text">
-            <strong>Meal Type:</strong> {{recipe.recipe.mealType[0]}}
-          </p>
-          <p class="card-text">
-            <strong>Cuisine:</strong>{{recipe.recipe.cuisineType[0]}}
-          </p>
-          <p class="card-text">
-            <strong>Dish:</strong>{{recipe.recipe.dishType[0]}}
-          </p>
-          <p class="card-text">
-            <strong>Calories:</strong>{{recipe.recipe.calories}} Kcal
-          </p>
-          <p class="card-text">
-            <strong>Source:</strong>{{recipe.recipe.source}}
-          </p>
-          <button
-            class="btn btn-primary btn-sm"
-            ng-click="addToFavorate(recipe)"
-          >
-            Add to favorate
-          </button>
-        </div>
-      </div>
+          </td>
+          <td>{{recipe.recipe.mealType[0]}}</td>
+          <td>{{recipe.recipe.cuisineType[0]}}</td>
+          <td>{{recipe.recipe.dishType[0]}}</td>
+          <td>{{recipe.recipe.calories | number:2}} Kcal</td>
+        </tbody>
+      </table>
     </div>
+    <br />
+    <button
+      ng-show="nextPageFlag && gridFlag"
+      class="btn btn-danger"
+      ng-click="prevPage(prevPageUrl)"
+    >
+      prev page
+    </button>
+    <button
+      ng-show="nextPageFlag && gridFlag"
+      class="btn btn-danger"
+      ng-click="nextPage(nextPageUrl)"
+    >
+      next page
+    </button>
   </div>
-  <!-- recipe list end -->
 </div>
-
-<button
-  ng-show="nextPageFlag"
-  class="btn btn-danger"
-  ng-click="nextPage(nextPageUrl)"
->
-  next page
-</button>
+<br /><br />

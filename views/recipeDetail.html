@@ -1,6 +1,7 @@
 <h1>Detail</h1>
 
-<div class="container">
+<div>
+  <br />
   <div class="card" style="width: 18rem">
     <img src="{{recipe.image}}" class="card-img-top" alt="..." />
     <div class="card-body">
@@ -10,15 +11,15 @@
         of the card's content.
       </p>
     </div>
-    <p class="card-text">
-      <strong>Cuisine: {{recipe.cuisineType[0]}} </strong>
-    </p>
-    <p class="card-text"><strong>Dish: {{recipe.dishType[0]}} </strong></p>
-    <p class="card-text">
-      <strong>Calories: {{recipe.calories}} kcal </strong>
-    </p>
-    <p class="card-text"><strong>Source: {{recipe.source}} </strong></p>
+    <div class="card-body">
+      <p class="card-text">
+        <strong>Cuisine: {{recipe.cuisineType[0]}} </strong>
+      </p>
+      <p class="card-text"><strong>Dish: {{recipe.dishType[0]}} </strong></p>
+      <p class="card-text">
+        <strong>Calories: {{recipe.calories | number:2}} kcal </strong>
+      </p>
+      <p class="card-text"><strong>Source: {{recipe.source}} </strong></p>
+    </div>
   </div>
 </div>
-
-<button ng-click="addToFavorate(recipe)">Add to Favorate</button>

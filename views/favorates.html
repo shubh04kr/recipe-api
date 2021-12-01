@@ -18,23 +18,23 @@
             >
           </h5>
           <p class="card-text">
-            <strong>Meal Type:</strong> {{recipe.recipe.mealType[0]}}
+            <strong> Meal Type: {{recipe.recipe.mealType[0]}} </strong>
           </p>
           <p class="card-text">
-            <strong>Cuisine:</strong>{{recipe.recipe.cuisineType[0]}}
+            <strong> Cuisine: {{recipe.recipe.cuisineType[0]}} </strong>
           </p>
           <p class="card-text">
-            <strong>Dish:</strong>{{recipe.recipe.dishType[0]}}
+            <strong> Dish Type : {{recipe.recipe.dishType[0]}} </strong>
           </p>
           <p class="card-text">
-            <strong>Calories:</strong>{{recipe.recipe.calories}}
+            <strong>
+              Calories: {{recipe.recipe.calories | number:2}} Kcal
+            </strong>
           </p>
           <p class="card-text">
-            <strong>Source:</strong>{{recipe.recipe.source}}
+            <strong> Source: {{recipe.recipe.source}} </strong>
           </p>
-          <p class="card-text">
-            <small class="text-muted">Last updated 3 mins ago</small>
-          </p>
+
           <button
             class="btn btn-primary btn-sm"
             ng-click="removeFromFavorate(recipe.id)"
